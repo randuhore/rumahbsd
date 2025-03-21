@@ -201,36 +201,31 @@ const RumahBSD = {
      */
     initFancybox: function() {
     if (typeof Fancybox !== 'undefined') {
-        // Deteksi apakah menggunakan perangkat mobile
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        // Konfigurasi dasar
-        const fancyboxConfig = {
+        // Konfigurasi dasar yang lebih sederhana dan kompatibel
+        Fancybox.bind('[data-fancybox]', {
+            // Opsi dasar
+            loop: true,
+            backdropClick: 'close',
+            dragToClose: false,
+            
+            // Opsi carousel
             Carousel: {
-                infinite: true,
-                friction: 0.96, // Lebih tinggi = lebih lambat
-                Panzoom: {
-                    decelFriction: 0.13, // Mengurangi "momentum" setelah swipe
-                    lockAxis: false,
-                }
+                friction: 0.88, // Sedikit mengurangi kecepatan slide
             },
+            
+            // Konfigurassi wheel mouse
+            wheel: false,
+            
+            // Opsi untuk gambar
             Image: {
-                zoom: false, // Matikan zoom untuk performa lebih baik di mobile
+                zoom: false, // Nonaktifkan zoom untuk performa lebih baik
             },
-            Toolbar: {
-                display: isMobile ? ['close'] : ['zoom', 'slideshow', 'fullscreen', 'close'] // Mengurangi jumlah tombol di mobile
-            },
-            preload: 1 // Hanya memuat 1 slide sebelum dan sesudah slide aktif
-        };
-        
-        // Jika mobile, matikan thumbnails untuk performa lebih baik
-        if (!isMobile) {
-            fancyboxConfig.Thumbs = {
+            
+            // Aktifkan thumbnails
+            Thumbs: {
                 autoStart: true
-            };
-        }
-        
-        Fancybox.bind('[data-fancybox]', fancyboxConfig);
+            }
+        });
     }
 },
     
