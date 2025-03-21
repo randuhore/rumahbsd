@@ -201,28 +201,13 @@ const RumahBSD = {
      */
     initFancybox: function() {
     if (typeof Fancybox !== 'undefined') {
-        // Konfigurasi paling dasar
         Fancybox.bind('[data-fancybox]', {
-            // Tambahkan preventClick untuk mencegah konflik dengan library lain
-            Image: {
-                preventClick: true
+            Carousel: {
+                infinite: true,
             },
-            // Modifikasi cara Fancybox menangani touch events
-            touch: {
-                vertical: false, // Nonaktifkan swipe vertikal
-                momentum: false // Nonaktifkan momentum (bisa menyebabkan lag)
+            Thumbs: {
+                autoStart: true,
             }
-        });
-        
-        // Menghentikan propagasi touch events dari Swiper ke Fancybox
-        document.querySelectorAll('.swiper-container, .swiper-wrapper, .swiper-slide').forEach(el => {
-            el.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-            }, { passive: true });
-            
-            el.addEventListener('touchmove', function(e) {
-                e.stopPropagation();
-            }, { passive: true });
         });
     }
 }
