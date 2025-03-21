@@ -201,16 +201,38 @@ const RumahBSD = {
      */
     initFancybox: function() {
     if (typeof Fancybox !== 'undefined') {
-        Fancybox.bind('[data-fancybox]', {
+        // Deteksi apakah menggunakan perangkat mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Konfigurasi dasar
+        const fancyboxConfig = {
             Carousel: {
                 infinite: true,
+                friction: 0.96, // Lebih tinggi = lebih lambat
+                Panzoom: {
+                    decelFriction: 0.13, // Mengurangi "momentum" setelah swipe
+                    lockAxis: false,
+                }
             },
-            Thumbs: {
-                autoStart: true,
-            }
-        });
+            Image: {
+                zoom: false, // Matikan zoom untuk performa lebih baik di mobile
+            },
+            Toolbar: {
+                display: isMobile ? ['close'] : ['zoom', 'slideshow', 'fullscreen', 'close'] // Mengurangi jumlah tombol di mobile
+            },
+            preload: 1 // Hanya memuat 1 slide sebelum dan sesudah slide aktif
+        };
+        
+        // Jika mobile, matikan thumbnails untuk performa lebih baik
+        if (!isMobile) {
+            fancyboxConfig.Thumbs = {
+                autoStart: true
+            };
+        }
+        
+        Fancybox.bind('[data-fancybox]', fancyboxConfig);
     }
-}
+},
     
     /**
      * Inisialisasi Hero Swiper (untuk halaman utama)
